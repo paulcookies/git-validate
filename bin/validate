@@ -77,7 +77,7 @@ internals.runCmd = function (projectRoot, env, name, script, done) {
 
     logFile.on('open', function () {
 
-        var hookProcess = Spawn(cmd, args, { stdio: [null, logFile, logFile], env: env });
+        var hookProcess = Spawn(cmd, args, { stdio: [null, logFile, logFile], env: env, cwd: projectRoot});
         hookProcess.on('close', function (code) {
 
             if (code === 0) {
@@ -125,7 +125,7 @@ internals.exit = function (code, callback) {
     });
 
     tryToExit();
-    
+
     // In Windows, when run as a Node.js child process, a script utilizing
     // this library might just exit with a 0 exit code, regardless. This code,
     // despite the fact that it looks a bit crazy, appears to fix that
